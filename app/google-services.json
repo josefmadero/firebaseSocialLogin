@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "130976797548",
+    "firebase_url": "https://fir-andsociallogin.firebaseio.com",
+    "project_id": "fir-andsociallogin",
+    "storage_bucket": "fir-andsociallogin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130976797548:android:b4b494f67f4c5669",
+        "android_client_info": {
+          "package_name": "com.luisrdm.firebaseandsocialloginentregable"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130976797548-u6uq9l76labaaj00o4pjg7m5t0gbv815.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.luisrdm.firebaseandsocialloginentregable",
+            "certificate_hash": "7D0327D754E0180A32A930605FB0F1391E8B83B4"
+          }
+        },
+        {
+          "client_id": "130976797548-s0djm5743a84sfo3pf81jd361n69g5po.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgK-6exXOrK6fj-XvhYi3w-PqX81e7Emk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130976797548-s0djm5743a84sfo3pf81jd361n69g5po.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
