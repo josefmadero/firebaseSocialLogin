@@ -1,6 +1,5 @@
 package com.luisrdm.firebaseandsocialloginentregable.view;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.luisrdm.firebaseandsocialloginentregable.R;
+import com.luisrdm.firebaseandsocialloginentregable.model.Artist;
 import com.luisrdm.firebaseandsocialloginentregable.model.Painting;
 
 import java.util.List;
@@ -64,7 +64,8 @@ public class PaintingsAdapter extends RecyclerView.Adapter implements View.OnCli
         }
 
         public void bindPainting(Painting actualPainting){
-            paintingImage.setImageResource(actualPainting.getSinglePaintingID());
+            //paintingImage.setImageResource(actualPainting.getImage());
+            //TODO obtener imagen
         }
     }
 }

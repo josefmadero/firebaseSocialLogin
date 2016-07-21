@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.luisrdm.firebaseandsocialloginentregable.R;
+import com.luisrdm.firebaseandsocialloginentregable.controller.MomaController;
+import com.luisrdm.firebaseandsocialloginentregable.model.Artist;
 import com.luisrdm.firebaseandsocialloginentregable.model.Painting;
+import com.luisrdm.firebaseandsocialloginentregable.util.ResultListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private List<Painting> paintingList;
+    private List<Artist> artistList;
     private Context context;
     private RecyclerView recyclerViewHome;
 
@@ -29,7 +33,14 @@ public class MainActivity extends AppCompatActivity {
         this.context = this;
 
         paintingList = new ArrayList<>();
-        //Pido al controller la lista de pinturas
+        final MomaController momaController = new MomaController();
+        momaController.getArtists(new ResultListener<List<Artist>>() {
+            @Override
+            public void finish(List<Artist> resultado) {
+                artistList = resultado;
+                paintingList = momaController.getPaintingsList();
+            }
+        });
 
         recyclerViewHome = (RecyclerView) findViewById(R.id.recyclerView_activity_main);
         recyclerViewHome.setHasFixedSize(true);

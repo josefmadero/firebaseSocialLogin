@@ -1,27 +1,34 @@
 package com.luisrdm.firebaseandsocialloginentregable.model;
 
-import java.util.List;
-
 /**
  * Created by digitalhouse on 20/07/16.
  */
 public class Painting {
-    private Integer singlePaintingID;
-    private String painterName;
+    private String image;
+    private String name;
 
-    public Integer getSinglePaintingID() {
-        return singlePaintingID;
+    public String getImage() {
+        return image;
     }
 
-    public void setSinglePaintingID(Integer singlePaintingID) {
-        this.singlePaintingID = singlePaintingID;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public String getPainterName() {
-        return painterName;
+    public String getName() {
+        return name;
     }
 
-    public void setPainterName(String painterName) {
-        this.painterName = painterName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Painting{" +
+                "image=" + image +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
