@@ -1,7 +1,5 @@
 package com.luisrdm.firebaseandsocialloginentregable.dao;
 
-import android.content.Context;
-import android.graphics.Movie;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -9,8 +7,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.luisrdm.firebaseandsocialloginentregable.model.Artist;
 import com.luisrdm.firebaseandsocialloginentregable.model.ArtistContainer;
 import com.luisrdm.firebaseandsocialloginentregable.util.ResultListener;
@@ -33,10 +29,12 @@ public class ArtistDao {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         ArtistContainer artistContainer = dataSnapshot.getValue(ArtistContainer.class);
                         listener.finish(artistContainer.getArtists());
+                        Log.d("Async desde el DAO","exito");
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
+                        Log.d("Async desde el DAO","fracaso");
                     }
                 });
     }

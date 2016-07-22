@@ -1,9 +1,8 @@
 package com.luisrdm.firebaseandsocialloginentregable.view;
 
 import android.content.Context;
-import android.location.GpsStatus;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Artist> artistList;
     private Context context;
     private RecyclerView recyclerViewHome;
+    private Boolean haveArtists = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +38,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void finish(List<Artist> resultado) {
                 artistList = resultado;
-                paintingList = momaController.getPaintingsList();
+                populatePaintingsList(resultado);
+                haveArtists = true;
+
+                Toast.makeText(context, "Tengo los artistas!", Toast.LENGTH_SHORT).show();
+
+                startRecyclerView();
             }
         });
 
+
+    }
+
+    private void startRecyclerView (){
         recyclerViewHome = (RecyclerView) findViewById(R.id.recyclerView_activity_main);
         recyclerViewHome.setHasFixedSize(true);
-        recyclerViewHome.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerViewHome.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
         PaintingsAdapter paintingsAdapter = new PaintingsAdapter(paintingList);
+
+        recyclerViewHome.setAdapter(paintingsAdapter);
 
         PaintingListener paintingListener = new PaintingListener();
         paintingsAdapter.setOnClickListener(paintingListener);
@@ -57,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Toast.makeText(v.getContext(), "Apretamos el elemento (onClickView del main) " + recyclerViewHome.getChildPosition(v), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void populatePaintingsList (List<Artist> artistList){
+        paintingList = new ArrayList<>();
+
+        for (Artist actualArtist : artistList) {
+            paintingList.addAll(actualArtist.getPaints());
         }
     }
 }

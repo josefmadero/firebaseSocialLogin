@@ -64,7 +64,7 @@ public class PaintingsAdapter extends RecyclerView.Adapter implements View.OnCli
         }
 
         public void bindPainting(Painting actualPainting){
-            //paintingImage.setImageResource(actualPainting.getImage());
+            paintingImage.setImageResource(actualPainting.getImage());
             //TODO obtener imagen
         }
     }
