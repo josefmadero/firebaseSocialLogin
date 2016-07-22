@@ -3,6 +3,7 @@ package com.luisrdm.firebaseandsocialloginentregable.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private Context context;
     private RecyclerView recyclerViewHome;
     private Boolean haveArtists = false;
+
+    private GridLayoutManager gridLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +54,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startRecyclerView (){
+
+        //gridLayout = new GridLayoutManager(MainActivity.this, 4);
+
         recyclerViewHome = (RecyclerView) findViewById(R.id.recyclerView_activity_main);
         recyclerViewHome.setHasFixedSize(true);
         recyclerViewHome.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
-        PaintingsAdapter paintingsAdapter = new PaintingsAdapter(paintingList);
+        PaintingsAdapter paintingsAdapter = new PaintingsAdapter(paintingList, context);
 
         recyclerViewHome.setAdapter(paintingsAdapter);
 

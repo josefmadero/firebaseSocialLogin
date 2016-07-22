@@ -1,6 +1,10 @@
 package com.luisrdm.firebaseandsocialloginentregable.controller;
 
+import android.content.Context;
+import android.net.Uri;
+
 import com.luisrdm.firebaseandsocialloginentregable.dao.ArtistDao;
+import com.luisrdm.firebaseandsocialloginentregable.dao.PaintingDao;
 import com.luisrdm.firebaseandsocialloginentregable.model.Artist;
 import com.luisrdm.firebaseandsocialloginentregable.util.ResultListener;
 
@@ -16,6 +20,16 @@ public class MomaController {
         artistDao.getArtistsFromFireBase(new ResultListener<List<Artist>>() {
             @Override
             public void finish(List<Artist> resultado) {
+                listener.finish(resultado);
+            }
+        });
+    }
+
+    public void getPainting(String paintingName, Context context, final ResultListener listener){
+        PaintingDao paintingDao = new PaintingDao();
+        paintingDao.getPaintingFromFirebase(paintingName,context, new ResultListener<Uri>() {
+            @Override
+            public void finish(Uri resultado) {
                 listener.finish(resultado);
             }
         });
