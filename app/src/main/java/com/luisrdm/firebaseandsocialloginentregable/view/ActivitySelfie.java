@@ -23,6 +23,8 @@ import com.luisrdm.firebaseandsocialloginentregable.R;
 import com.luisrdm.firebaseandsocialloginentregable.util.EasyImage;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ActivitySelfie extends AppCompatActivity {
 
@@ -30,7 +32,8 @@ public class ActivitySelfie extends AppCompatActivity {
     private EasyImage easyImage;
     private StorageReference storageRef;
     private StorageReference imagesRef;
-    private Integer counter = 0;
+    private Date now;
+    private SimpleDateFormat formatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,8 @@ public class ActivitySelfie extends AppCompatActivity {
 
 
         storageRef = storage.getReferenceFromUrl("gs://fir-andsociallogin.appspot.com/");
-        imagesRef = storageRef.child("selfie00"+counter+".jpg");
+
+        formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 
     }
 
@@ -62,6 +66,8 @@ public class ActivitySelfie extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
+        now = new Date();
+        imagesRef = storageRef.child("selfie00"+formatter.format(now)+".jpg");
         UploadTask uploadTask = imagesRef.putBytes(data);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override

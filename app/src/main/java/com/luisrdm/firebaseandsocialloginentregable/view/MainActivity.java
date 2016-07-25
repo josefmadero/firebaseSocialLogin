@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -22,6 +24,12 @@ import com.facebook.HttpMethod;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
 import com.luisrdm.firebaseandsocialloginentregable.R;
 import com.luisrdm.firebaseandsocialloginentregable.controller.MomaController;
 import com.luisrdm.firebaseandsocialloginentregable.model.Artist;
@@ -45,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private CallbackManager callbackManager;
     private GridLayoutManager gridLayout;
-    LoginButton loginButton;
+    private LoginButton loginButton;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.context = this;
+        mAuth = FirebaseAuth.getInstance();
 
         paintingList = new ArrayList<>();
         momaController.getArtists(new ResultListener<List<Artist>>() {
@@ -73,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         loginButton = (LoginButton) findViewById(R.id.facebook_login_button);
 
         if(AccessToken.getCurrentAccessToken() != null){
-            request();
+            //request();
         }
 
         // Callback registration
@@ -81,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(context, "FB Login Success", Toast.LENGTH_SHORT).show();
-                request();
+                handleFacebookAccessToken(loginResult.getAccessToken());
+                //request();
             }
 
             @Override
@@ -193,5 +204,25 @@ public class MainActivity extends AppCompatActivity {
         parameters.putString("fields", "id,name,link,picture");
         request.setParameters(parameters);
         request.executeAsync();
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                             Toast.makeText(context, "Authentication Firebase failed.",Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
     }
 }

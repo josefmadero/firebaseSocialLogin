@@ -69,7 +69,6 @@ public class Activity_detail_artist_and_painting extends AppCompatActivity {
 
         //Aca asociamos el contenido que queremos mostrar al share button
         shareButton.setShareContent(linkContent);
-
     }
 
 
