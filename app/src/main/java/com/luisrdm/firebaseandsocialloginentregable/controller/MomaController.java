@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class MomaController {
 
+    PaintingDao paintingDao = new PaintingDao();
+
     public void getArtists(final ResultListener<List<Artist>> listener){
         ArtistDao artistDao = new ArtistDao();
         artistDao.getArtistsFromFireBase(new ResultListener<List<Artist>>() {
@@ -26,7 +28,6 @@ public class MomaController {
     }
 
     public void getPainting(String paintingName, Context context, final ResultListener listener){
-        PaintingDao paintingDao = new PaintingDao();
         paintingDao.getPaintingFromFirebase(paintingName,context, new ResultListener<Uri>() {
             @Override
             public void finish(Uri resultado) {

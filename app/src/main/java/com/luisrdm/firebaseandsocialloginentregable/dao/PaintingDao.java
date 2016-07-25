@@ -17,7 +17,6 @@ import com.luisrdm.firebaseandsocialloginentregable.util.ResultListener;
 public class PaintingDao {
 
     Context context;
-    Uri paintingRefUri;
     StorageReference storageRef;
 
     public void getPaintingFromFirebase (final String paintingRoute, final Context context, final ResultListener<Uri> listener){
@@ -28,7 +27,6 @@ public class PaintingDao {
         storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                paintingRefUri = uri;
                 listener.finish(uri);
             }
 
@@ -38,13 +36,5 @@ public class PaintingDao {
                 Toast.makeText(context, "Falló bajar la imagen.", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public Uri getPaintingRefUri() {
-        return paintingRefUri;
-    }
-
-    public void setPaintingRefUri(Uri paintingRefUri) {
-        this.paintingRefUri = paintingRefUri;
     }
 }

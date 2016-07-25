@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.luisrdm.firebaseandsocialloginentregable.R;
 import com.luisrdm.firebaseandsocialloginentregable.controller.MomaController;
+import com.luisrdm.firebaseandsocialloginentregable.model.Artist;
 import com.luisrdm.firebaseandsocialloginentregable.model.Painting;
 import com.luisrdm.firebaseandsocialloginentregable.util.ResultListener;
 import com.squareup.picasso.Picasso;
@@ -22,12 +24,17 @@ import java.util.List;
 public class PaintingsAdapter extends RecyclerView.Adapter implements View.OnClickListener {
 
     private List<Painting> paintingsList;
+    private List<Artist> artistList;
     private View.OnClickListener listener;
     private static Context context;
+    private static ImageView paintingImage;
+    private static TextView paintingName;
+    private static TextView artistName;
 
-    public PaintingsAdapter(List<Painting> paintingList, Context context) {
+    public PaintingsAdapter(List<Painting> paintingList, List<Artist> artistList, Context context) {
         this.context = context;
         this.paintingsList = paintingList;
+        this.artistList = artistList;
     }
 
     public void setOnClickListener(View.OnClickListener unListener) {
@@ -46,8 +53,16 @@ public class PaintingsAdapter extends RecyclerView.Adapter implements View.OnCli
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Painting painting = paintingsList.get(position);
+        Artist artist = new Artist();
+        for (Artist actualArtist : artistList) {
+            if(actualArtist.getPaints().contains(painting)){
+                artist = actualArtist;
+                break;
+            }
+        }
+
         PaintingsViewHolder paintingsViewHolder = (PaintingsViewHolder) holder;
-        paintingsViewHolder.bindPainting(painting);
+        paintingsViewHolder.bindPainting(artist, painting);
     }
 
     @Override
@@ -62,14 +77,21 @@ public class PaintingsAdapter extends RecyclerView.Adapter implements View.OnCli
 
     private static class PaintingsViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView paintingImage;
+
 
         public PaintingsViewHolder(View itemView) {
             super(itemView);
             paintingImage = (ImageView) itemView.findViewById(R.id.imageView_recyclerViewDetail_painting_home);
+            paintingName = (TextView) itemView.findViewById(R.id.textView_recyclerViewDetail_paintingName);
+            artistName = (TextView) itemView.findViewById(R.id.textView_recyclerViewDetail_artistName);
+
         }
 
-        public void bindPainting(Painting actualPainting){
+        public void bindPainting(Artist actualArtist, Painting actualPainting){
+
+            artistName.setText(actualArtist.getName());
+            paintingName.setText(actualPainting.getName());
+
             MomaController momaController = new MomaController();
             momaController.getPainting(actualPainting.getImage(), context, new ResultListener<Uri>() {
                 @Override
@@ -77,7 +99,6 @@ public class PaintingsAdapter extends RecyclerView.Adapter implements View.OnCli
                     Picasso.with(context).load(resultado).into(paintingImage);
                 }
             });
-            //TODO obtener imagen
         }
     }
 }

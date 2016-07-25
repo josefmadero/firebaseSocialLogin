@@ -9,7 +9,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,6 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.Activity_detail_artist_and_painting"/>
+        <activity android:name=".view.ActivityLoginFB"/>
     </application>
+
+    <provider android:authorities="com.facebook.app.FacebookContentProvider890397341065838"
+        android:name="com.facebook.FacebookContentProvider"
+        android:exported="true" />
 
 </manifest>
