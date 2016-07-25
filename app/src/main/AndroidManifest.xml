@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.luisrdm.firebaseandsocialloginentregable">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -20,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.Activity_detail_artist_and_painting"/>
-        <activity android:name=".view.ActivityLoginFB"/>
+        <activity android:name=".view.ActivitySelfie"/>
     </application>
 
     <provider android:authorities="com.facebook.app.FacebookContentProvider890397341065838"

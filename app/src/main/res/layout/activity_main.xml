@@ -24,7 +24,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login to send a selfie!"
+            android:text="Send us a selfie!"
             android:onClick="loginToSelfie"
             />
         <com.facebook.login.widget.LoginButton

@@ -159,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void loginToSelfie (View view){
         Toast.makeText(MainActivity.this, "Click en button login.", Toast.LENGTH_SHORT).show();
-/*        Intent intent = new Intent(view.getContext(), ActivityLoginFB.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(view.getContext(), ActivitySelfie.class);
+        startActivity(intent);
     }
 
 
