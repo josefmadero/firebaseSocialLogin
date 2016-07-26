@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void request() {
+    /*private void request() {
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/me",
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         parameters.putString("fields", "id,name,link,picture");
         request.setParameters(parameters);
         request.executeAsync();
-    }
+    }*/
 
     private void handleFacebookAccessToken(AccessToken token) {
 
