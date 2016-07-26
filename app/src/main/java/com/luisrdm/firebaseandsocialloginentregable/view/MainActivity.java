@@ -30,6 +30,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.luisrdm.firebaseandsocialloginentregable.R;
 import com.luisrdm.firebaseandsocialloginentregable.controller.MomaController;
 import com.luisrdm.firebaseandsocialloginentregable.model.Artist;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private GridLayoutManager gridLayout;
     private LoginButton loginButton;
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +108,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d("TAG", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d("TAG", "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
     }
 
     private void startRecyclerView (){
@@ -147,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
             bundle.putString(Activity_detail_artist_and_painting.ARTISTNAME,actualArtist.getName() );
 
-            momaController.getPainting(actualPaint.getImage(), context, new ResultListener<Uri> () {
+            momaController.getPainting(actualPaint, context, new ResultListener<Uri> () {
                 @Override
                 public void finish(Uri resultado) {
                     bundle.putString(Activity_detail_artist_and_painting.PAINTINGURI, String.valueOf(resultado));
@@ -155,8 +170,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
-
         }
     }
 
@@ -174,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     private void request() {
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
@@ -185,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(GraphResponse response) {
                         JSONObject jsonObject = response.getJSONObject();
-
 
                         try {
                             String name = jsonObject.getString("name");
@@ -224,5 +235,19 @@ public class MainActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 }

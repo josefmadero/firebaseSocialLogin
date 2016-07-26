@@ -30,6 +30,7 @@ public class PaintingsAdapter extends RecyclerView.Adapter implements View.OnCli
     private static ImageView paintingImage;
     private static TextView paintingName;
     private static TextView artistName;
+    private static MomaController momaController = new MomaController();
 
     public PaintingsAdapter(List<Painting> paintingList, List<Artist> artistList, Context context) {
         this.context = context;
@@ -92,13 +93,15 @@ public class PaintingsAdapter extends RecyclerView.Adapter implements View.OnCli
             artistName.setText(actualArtist.getName());
             paintingName.setText(actualPainting.getName());
 
-            MomaController momaController = new MomaController();
+            momaController.setUrlOfPaintingIfNull(actualPainting, context, paintingImage);
+
+/*            MomaController momaController = new MomaController();
             momaController.getPainting(actualPainting.getImage(), context, new ResultListener<Uri>() {
                 @Override
                 public void finish(Uri resultado) {
                     Picasso.with(context).load(resultado).into(paintingImage);
                 }
-            });
+            });*/
         }
     }
 }
